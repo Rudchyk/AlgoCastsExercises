@@ -12,6 +12,7 @@ function fib1(n) {
   if (n < 2) {
     return n;
   }
+
   return fib(n - 1) + fib(n - 2);
 }
 
@@ -26,4 +27,30 @@ function fib(n) {
   return result[n];
 }
 
-module.exports = fib;
+function memoize(fn) {
+  const cache = {};
+
+  return function (...args) {
+    if (cache[args]) {
+      return cache[args];
+    }
+
+    // const result = fn.apply(this, args);
+    const result = fn(...args);
+    cache[args] = result;
+
+    return result;
+  };
+}
+
+function slowFib(n) {
+  if (n < 2) {
+    return n;
+  }
+
+  return fib(n - 1) + fib(n - 2);
+}
+
+const fib3 = memoize(slowFib);
+
+module.exports = fib3;
