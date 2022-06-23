@@ -48,7 +48,7 @@ function slowFib(n) {
     return n;
   }
 
-  return fib(n - 1) + fib(n - 2);
+  return fib3(n - 1) + fib3(n - 2);
 }
 
 const fib3 = memoize(slowFib);
