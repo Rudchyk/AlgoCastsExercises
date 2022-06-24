@@ -12,6 +12,7 @@ class Node {
 class LinkedList {
   constructor() {
     this.head = null;
+    this.counter = 0;
   }
 
   insertFirst(data) {
@@ -129,34 +130,59 @@ class LinkedList {
   insertAt(data, index) {
     let counter = -1;
     const getByIndex = (head) => {
-      head;
-      index;
-      counter;
-      if (head?.data) {
-        counter++;
+      counter++;
 
-        if (index === counter) {
-          head = new Node(data, head.next);
+      if (index === counter) {
+        if (head === null) {
+          this.head = new Node(data);
         } else {
-          getByIndex(head.next);
+          const node = { ...head };
+          head.data = data;
+          head.next = node;
         }
+        return;
+      }
+
+      if (head.next !== null) {
+        getByIndex(head.next);
       } else {
-        head = new Node(data);
+        this.insertLast(data);
+      }
+    };
+    getByIndex(this.head);
+  }
+
+  forEach(cb) {
+    const loop = (head) => {
+      cb(head);
+
+      if (head.next === null) {
+        return;
+      } else {
+        loop(head.next);
       }
     };
 
-    getByIndex(this.head);
+    loop(this.head);
   }
-  // forEach() {}
-  // size() {}
+
+  next() {
+    const item = this.getAt(this.counter);
+    this.counter++;
+
+    return this.counter <= this.size()
+      ? {
+          value: item,
+          done: false,
+        }
+      : {
+          done: true,
+        };
+  }
+
+  [Symbol.iterator]() {
+    return this;
+  }
 }
-
-const list = new LinkedList();
-list.insertFirst(1);
-list.insertAt('Hi', 1);
-const b1 = list.getAt(1);
-
-list;
-b1;
 
 module.exports = { Node, LinkedList };
