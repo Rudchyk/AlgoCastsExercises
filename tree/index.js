@@ -10,8 +10,81 @@
 // on the tree class.  Each method should accept a
 // function that gets called with each element in the tree
 
-class Node {}
+class Node {
+  constructor(data) {
+    this.data = data;
+    this.children = [];
+  }
 
-class Tree {}
+  add(data) {
+    this.children.push(new Node(data));
+  }
+
+  remove(data) {
+    this.children = this.children.filter((child) => child.data !== data);
+  }
+}
+
+class Tree {
+  constructor() {
+    this.root = null;
+  }
+
+  // @my
+  // traverseBF(cb) {
+  //   let arr = [this.root];
+  //   const getArr = (node = this.root) => {
+  //     if (node.children) {
+  //       arr = arr.concat(node.children);
+
+  //       for (let i = 0; i < node.children.length; i++) {
+  //         getArr(node.children[i]);
+  //       }
+  //     }
+  //   };
+  //   getArr();
+
+  //   arr.forEach((node) => {
+  //     cb(node);
+  //   });
+  // }
+  traverseBF(cb) {
+    let arr = [this.root];
+    while (arr.length) {
+      const node = arr.shift();
+
+      arr.push(...node.children);
+      cb(node);
+    }
+  }
+
+  // @my
+  // traverseDF(cb) {
+  //   const arr = [];
+  //   const getArr = (node = this.root) => {
+  //     if (node.children) {
+  //       arr.push(node);
+
+  //       for (let i = 0; i < node.children.length; i++) {
+  //         getArr(node.children[i]);
+  //       }
+  //     }
+  //   };
+  //   getArr();
+
+  //   arr.forEach((node) => {
+  //     cb(node);
+  //   });
+  // }
+  traverseDF(cb) {
+    let arr = [this.root];
+    while (arr.length) {
+      const node = arr.shift();
+
+      arr.unshift(...node.children);
+      cb(node);
+    }
+  }
+}
 
 module.exports = { Tree, Node };
