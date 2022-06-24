@@ -24,10 +24,4 @@ function midpoint(list) {
   return slow;
 }
 
-const l = new LinkedList();
-l.insertLast('a');
-l.insertLast('b');
-l.insertLast('c');
-console.log(midpoint(l));
-
 module.exports = midpoint;
